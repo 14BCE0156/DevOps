@@ -1,0 +1,142 @@
+
+
+GitHub : https://github.com/satyendra207/Cloud-Project.git
+		 https://github.com/praveenprabha/kubernetes-learning
+
+
+
+To check and understand options
+kubectl config <>
+kubectl get all -n <namespacce> --context=<context>
+kubectl get namespaces
+kubectl get endpoints
+
+
+
+
+Commands to be used :-
+
+==============================
+APPLY files in context :  digitalocean-context  
+==============================
+
+kubectl apply -f NameSpace/. --context=digitalocean-context
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-1 --context=digitalocean-context
+kubectl apply -f Config-Customer/. -n customer-1 --context=digitalocean-context
+kubectl apply -f Ingress/customer1-ingress.yaml -n customer-1 --context=digitalocean-context
+
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-2 --context=digitalocean-context
+kubectl apply -f Config-Customer/. -n customer-2 --context=digitalocean-context
+kubectl apply -f Ingress/customer2-ingress.yaml -n customer-2 --context=digitalocean-context
+
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-3 --context=digitalocean-context
+kubectl apply -f Config-Customer/. -n customer-3 --context=digitalocean-context
+kubectl apply -f Ingress/customer3-ingress.yaml -n customer-3 --context=digitalocean-context
+
+==============================
+DELETE in context :  digitalocean-context  
+==============================
+
+kubectl delete -f Config-Customer/. -n customer-1 --context=digitalocean-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-1 --context=digitalocean-context
+kubectl delete -f Ingress/customer1-ingress.yaml -n customer-1 --context=digitalocean-context
+
+kubectl delete -f Config-Customer/. -n customer-2 --context=digitalocean-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-2 --context=digitalocean-context
+kubectl delete -f Ingress/customer2-ingress.yaml -n customer-2 --context=digitalocean-context
+
+kubectl delete -f Config-Customer/. -n customer-3 --context=digitalocean-context
+kubectl delete -f Ingress/customer3-ingress.yaml -n customer-3 --context=digitalocean-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-3 --context=digitalocean-context
+
+kubectl delete -f NameSpace/. --context=digitalocean-context
+
+
+
+==============================
+APPLY files in context : gcp-context
+==============================
+kubectl apply -f NameSpace/. --context=gcp-context
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-1 --context=gcp-context
+kubectl apply -f Config-Customer/. -n customer-1 --context=gcp-context
+kubectl apply -f Ingress/customer1-ingress.yaml -n customer-1 --context=gcp-context
+
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-2 --context=gcp-context
+kubectl apply -f Config-Customer/. -n customer-2 --context=gcp-context
+kubectl apply -f Ingress/customer2-ingress.yaml -n customer-2 --context=gcp-context
+
+
+kubectl apply -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-3 --context=gcp-context
+kubectl apply -f Config-Customer/. -n customer-3 --context=gcp-context
+kubectl apply -f Ingress/customer3-ingress.yaml -n customer-3 --context=gcp-context
+
+==============================
+DELETE in context :  gcp-context
+==============================
+
+kubectl delete -f Config-Customer/. -n customer-1 --context=gcp-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-1 --context=gcp-context
+kubectl delete -f Ingress/customer1-ingress.yaml -n customer-1 --context=gcp-context
+
+kubectl delete -f Config-Customer/. -n customer-2 --context=gcp-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-2 --context=gcp-context
+kubectl delete -f Ingress/customer2-ingress.yaml -n customer-2 --context=gcp-context
+
+kubectl delete -f Config-Customer/. -n customer-3 --context=gcp-context
+kubectl delete -f Ingress/customer3-ingress.yaml -n customer-3 --context=gcp-context
+kubectl delete -f Config-Customer/wpdb-pvc-1GB.yaml/. -n customer-3 --context=gcp-context
+
+kubectl delete -f NameSpace/. --context=gcp-context
+
+
+
+
+
+
+kubectl get nodes --context=gcp-context
+kubectl get nodes --context=digitalocean-context
+
+
+
+
+
+==============================
+Getting Ingress Controller Information from different Clusters
+==============================
+SVC for each ingress controller
+kubectl get svc -n ingress-nginx --context=gcp-context
+kubectl get svc -n ingress-nginx --context=
+
+
+
+
+
+
+==============================
+Creating Secret KEY from JSON key file having credentials. For each namespace and each cluster
+==============================
+# Creating secret key in namespace customer-1
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-1 --context=gcp-context
+
+# Creating secret key in namespace customer-2
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-2 --context=gcp-context
+
+# Creating secret key in namespace customer-1
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-3 --context=gcp-context
+
+
+# Creating secret key in namespace customer-1
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-1 --context=digitalocean-context
+
+# Creating secret key in namespace customer-2
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-2 --context=digitalocean-context
+
+# Creating secret key in namespace customer-1
+kubectl create secret docker-registry gcr-json-key --docker-server=gcr.io  --docker-username=_json_key --docker-password="$(cat ./keyfile.json)"  --docker-email=info@doorward.tech -n customer-3 --context=digitalocean-context
+
+

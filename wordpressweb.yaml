@@ -1,0 +1,57 @@
+- hosts: webservers
+  remote_user: ubuntu
+  become_user: root
+  become_method: sudo
+  become: yes
+
+  vars:
+    package_name: apache2
+    package_list:
+      - apache2
+      - libapache2-mod-php
+      - php-mysql
+    service_name: apache2
+    document_root: /var/www/html
+    website_name: www.basil.com
+    db_name: wpdb
+    db_user: wpuser
+    db_password: DEVOPS12345
+    db_host: 172.31.36.31
+    website_list:
+      - www.basil.com
+      - www.devops.com
+      - www.example.com
+      - www.test.com
+      - www.mycompany.com
+
+  tasks:
+    - name: Install all necessary packages
+      apt:
+        name: "{{ package_list }}"
+        state: latest
+        update_cache: yes
+      notify: Restart Apache
+
+    - name: Apache Service must be up and running
+      service:
+        name: "{{ service_name }}"
+        state: started
+        enabled: yes
+
+    - name: Download and extract wordpress
+      unarchive:
+        remote_src: yes
+        src: "https://wordpress.org/latest.tar.gz"
+        dest: /var/www/html
+
+    - name: Copy wp-config.php file
+      template:
+        src: /home/ansible/.ansible/wp-config.php.j2
+        dest: /var/www/html/wordpress/wp-config.php
+        mode: 644
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: "{{ service_name }}"
+        state: reloaded
